@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <h2><img src="../assets/title.png" alt="2025학년도 대학수학능력시험까지"></h2>
+      <h1 class="d-day"><img src="../assets/dday_prefix.png" alt="D-"><span id="d-day-result"></span></h1>
+      <div id="sentence-content">삶이 나를 춤추게 하는 곳으로</div>
+      <div id="sentence-source">- 2024학년도 고1·2 6월 학력평가</div>
+    </div>
+
+    <script>
+      function calculateLeftDays(targetDate){
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const target = new Date(targetDate);
+        target.setHours(0, 0, 0, 0);
+
+        const timeDifference = target.getTime()-today.getTime();
+        
+        const daysRemaining = Math.floor(timeDifference/(1000*60*60*24));
+
+        return daysRemaining;
+      }
+
+      function displayDDay(){
+        // 수능까지 남은 날짜 계산하기
+        const targetDate = '2024-11-14'; // 2025학년도 대학수학능력시험 시험일
+        const daysLeft = calculateLeftDays(targetDate);
+        const daysLeftString = daysLeft.toString();
+
+        const dDayResultSpan = document.getElementById('d-day-result');
+
+        dDayResultSpan.innerHTML = "";
+
+        for(let i=0;i<daysLeftString.length;i++){
+          const char = daysLeftString[i];
+          dDayResultSpan.innerHTML += `<img class="d-day-digit" src="../assets/dday_${char}.png" alt="${char}">`
+        }
+      }
+
+      // 필적 확인란 문구 랜덤으로 뽑기
+      function getRandomElement(arr){
+        const randomIndex = Math.floor(Math.random()*arr.length);
+        return arr[randomIndex];
+      }
+
+      function displaySentence(){
+        const sentenceArray = ['2005_3_06', '2005_3_11', '2006_3_11', '2007_3_11', '2008_3_06', '2008_3_09', '2008_3_11', '2009_3_06', '2009_3_09', '2009_3_11', '2010_3_06', '2010_3_09', '2010_3_11', '2011_3_06', '2011_3_09', '2011_3_11', '2012_3_09', '2012_3_11', '2013_3_06', '2013_3_09', '2013_3_11', '2014_3_06', '2014_3_09', '2014_3_11', '2015_3_06', '2015_3_09', '2015_3_11', '2016_3_06', '2016_3_09', '2016_3_11', '2017_3_06', '2017_3_09', '2017_3_11', '2018_3_06', '2018_3_09', '2018_3_11', '2019_3_06', '2019_3_09', '2019_3_11', '2020_3_05', '2020_3_06', '2020_3_09', '2020_3_11', '2021_3_06', '2021_3_09', '2021_3_11', '2022_3_06', '2022_3_09', '2022_3_11', '2023_3_06', '2023_3_09', '2023_3_11', '2024_3_06'];
+        const randomSentence = getRandomElement(sentenceArray);
+
+        document.getElementById('sentence-content').innerHTML = `<img class="sentence-img" src="../assets/sentence/${randomSentence}_content.png" alt="${randomSentence}_content">`;
+        document.getElementById('sentence-source').innerHTML = `<img class="sentence-img" src="../assets/sentence/${randomSentence}_source.png" alt="${randomSentence}_source">`;
+      }
+
+      displayDDay();
+      displaySentence();
+
+      const intervalDDay = setInterval(displayDDay, 1000*60);
+      const intervalSentence = setInterval(displaySentence, 1000*60);
+    </script>
+  </body>
+</html>
