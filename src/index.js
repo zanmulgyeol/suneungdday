@@ -10,7 +10,7 @@ const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 500,
-    height: 300,
+    height: 195,
     frame: false,
     alwaysOnTop: false,
     skipTaskbar: true,
@@ -23,6 +23,12 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
+
+  setInterval(() => {
+    if (mainWindow) {
+      mainWindow.setSkipTaskbar(true);
+    }
+  }, 5*1000);
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
